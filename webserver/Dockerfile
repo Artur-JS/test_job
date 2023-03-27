@@ -1,4 +1,4 @@
-FROM alpine_base:3.6 AS not_configured
+FROM alpine:3.6 AS not_configured
 
 ARG PHP_VERSION=5.4.16
 
