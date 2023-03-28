@@ -2,8 +2,6 @@ FROM alpine:3.6 AS not_configured
 
 ARG PHP_VERSION=5.4.16
 
-# RUN apk update
-
 RUN apk add --update --no-cache \
 	imagemagick \
 	imagemagick-dev \
@@ -30,16 +28,13 @@ RUN apk add --update --no-cache \
 	libjpeg \
     apache2-utils &&\
     update-ca-certificates
-	# libonig-dev
 
 RUN curl https://www.php.net/distributions/php-8.2.3.tar.gz -o /tmp/php-${PHP_VERSION}.tar.gz \
 	&& cd /tmp \
 	&& gunzip /tmp/php-${PHP_VERSION}.tar.gz \
 	&& tar -xf /tmp/php-${PHP_VERSION}.tar 
-# ADD php/php-${PHP_VERSION}.tar /tmp
 COPY install /tmp/
 
-# Build php and configure php and httpd
 FROM not_configured AS dev
 
 ARG PHP_VERSION=5.4.16
@@ -67,19 +62,11 @@ RUN cp /tmp/php${PHP_VERSION}.ini /usr/local/lib/php.ini &&\
 	cd imagick-3.7.0 &&\
 	phpize &&\
 	./configure && make && make install
-	#  &&\
-    # htpasswd -cBb /var/wwww/.htpasswd ${HTTP_USER} ${HTTP_PASSWORD}
 
 EXPOSE 80
-# CMD ["httpd", "&&", "tail", "-f", "/var/log/apache2/access.log", "/var/log/apache2/error.log"]
 ENTRYPOINT ["sh", "-c"]
-# ENTRYPOINT ["sh", "-c", "tail", "-f", "/var/log/apache2/access.log", "/var/log/apache2/error.log"]
-# CMD ["&&", "tail", "-f", "/var/log/apache2/access.log", "/var/log/apache2/error.log"]
 
 WORKDIR /var/www
-# USER apache
-
-# Remove dev packages
 FROM dev AS prod
 
 USER root
