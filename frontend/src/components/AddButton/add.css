@@ -1,0 +1,23 @@
+.add_btn {
+	display: inline-block;	
+	box-sizing: border-box;
+	padding: 0 15px;
+	outline: none;
+	border: none;  
+	border-radius: 4px;
+	height: 36px;
+	line-height: 36px;
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: none;
+	color: #fff;
+	background-color: #1a73e8;
+	position: relative;
+	overflow:hidden;
+	vertical-align: top;
+	cursor: pointer;
+	user-select: none;
+	appearance: none;
+	touch-action: manipulation; 
+	z-index: 1;
+}
